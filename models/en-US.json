@@ -1,0 +1,310 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "fish world",
+      "intents": [
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": [
+            "help me to feed the fishy",
+            "help me to feed the fishes",
+            "help me to feed the fish",
+            "help me to feed",
+            "help"
+          ]
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "saveMyFeed",
+          "slots": [],
+          "samples": [
+            "I have the fishes now",
+            "Yes I've fed the fish",
+            "Do not forget I have fed the fish",
+            "Please remember I have fed the fish",
+            "I have fed the fishes please save it",
+            "I have fed the fish you may save the date and time",
+            "I want to feed the fish",
+            "I have fed",
+            "I have fed the fish today",
+            "I have fed the fishes today",
+            "I have fed the fish",
+            "I have fed the fishes",
+            "Save this feed",
+            "Save my feed"
+          ]
+        },
+        {
+          "name": "getLastFeedInfo",
+          "slots": [
+            {
+              "name": "fishVerbName",
+              "type": "fishVerb"
+            }
+          ],
+          "samples": [
+            "Do you remember when I fed the {fishVerbName}",
+            "Did I feed the {fishVerbName} today",
+            "Have I fed the {fishVerbName}",
+            "Did I feed the {fishVerbName}",
+            "when did i fed",
+            "When did I fed the fishes",
+            "Did I feed the fish yesterday",
+            "Did I feed the fish today",
+            "Can you tell the last time the fish were fed",
+            "When did I feed last time",
+            "When did I feed"
+          ]
+        },
+        {
+          "name": "AMAZON.YesIntent",
+          "samples": [
+            "I do want to feed",
+            "Yeah",
+            "Yes I've fed them now",
+            "Yes I want to feed them now",
+            "Yep I want to",
+            "Absolutely yes I want to feed the fishes",
+            "Sure",
+            "Yes I want to",
+            "Yes I have fed the fish",
+            "Yes save this feed time",
+            "Yes I'm going to feed the fish",
+            "Yes I want to feed the fishes"
+          ]
+        },
+        {
+          "name": "AMAZON.NoIntent",
+          "samples": [
+            "I don't want to them now",
+            "I don't want to feed them right now",
+            "I don't want to feed them",
+            "No I don't want ",
+            "May be later",
+            "Nope not right now",
+            "Nah not right now",
+            "No I don't want to feed them now"
+          ]
+        },
+        {
+          "name": "AMAZON.RepeatIntent",
+          "samples": [
+            "what's  that",
+            "repeat that",
+            "please repeat that",
+            "Tell me that again",
+            "Why did you just say",
+            "Come again what was that",
+            "Please repeat what you just said",
+            "Can you say that again"
+          ]
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "FeedingScheduleIntent",
+          "slots": [
+            {
+              "name": "feedInterval",
+              "type": "feed_interval",
+              "samples": [
+                "I want to feed every {feedInterval}",
+                "every {feedInterval}",
+                "{feedInterval}"
+              ]
+            }
+          ],
+          "samples": [
+            "{feedInterval} days",
+            "{feedInterval} day",
+            "{feedInterval}"
+          ]
+        }
+      ],
+      "types": [
+        {
+          "values": [
+            {
+              "name": {
+                "value": "fishy"
+              }
+            },
+            {
+              "name": {
+                "value": "fishes"
+              }
+            },
+            {
+              "name": {
+                "value": "fish"
+              }
+            }
+          ],
+          "name": "fishVerb"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "10",
+                "synonyms": [
+                  "every ten days",
+                  "ten days",
+                  "ten"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "9",
+                "synonyms": [
+                  "every nine days",
+                  "nine days",
+                  "nine"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "8",
+                "synonyms": [
+                  "every eight days",
+                  "eight days",
+                  "eight"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "7",
+                "synonyms": [
+                  "every seven days",
+                  "seven days",
+                  "seven"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "6",
+                "synonyms": [
+                  "every six days",
+                  "six days",
+                  "six"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "5",
+                "synonyms": [
+                  "every five days",
+                  "five days",
+                  "five"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "4",
+                "synonyms": [
+                  "every four days",
+                  "four days",
+                  "four"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "3",
+                "synonyms": [
+                  "every three days",
+                  "three days",
+                  "three"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "2",
+                "synonyms": [
+                  "every two days",
+                  "two days",
+                  "two"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "1",
+                "synonyms": [
+                  "every one day",
+                  "every day",
+                  "one day",
+                  "one"
+                ]
+              }
+            }
+          ],
+          "name": "feed_interval"
+        }
+      ]
+    },
+    "dialog": {
+      "intents": [
+        {
+          "name": "FeedingScheduleIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "feedInterval",
+              "type": "feed_interval",
+              "elicitationRequired": true,
+              "confirmationRequired": true,
+              "prompts": {
+                "confirmation": "Confirm.Slot.190300688808.1116847346349",
+                "elicitation": "Elicit.Slot.190300688808.1116847346349"
+              }
+            }
+          ]
+        }
+      ],
+      "delegationStrategy": "SKILL_RESPONSE"
+    },
+    "prompts": [
+      {
+        "id": "Confirm.Slot.190300688808.1116847346349",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "So you want to feed the fish once every {feedInterval} days. Is that right?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.190300688808.1116847346349",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "So how often do you want to feed"
+          }
+        ]
+      }
+    ]
+  },
+  "version": "32"
+}

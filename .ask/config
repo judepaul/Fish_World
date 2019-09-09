@@ -1,0 +1,33 @@
+{
+  "deploy_settings": {
+    "default": {
+      "skill_id": "amzn1.ask.skill.16c28dee-2ced-48d0-8f8e-c7d9c53837e7",
+      "was_cloned": false,
+      "merge": {},
+      "resources": {
+        "manifest": {
+          "eTag": "1349ae7aac17f18e0de1f6e147bb2b01"
+        },
+        "interactionModel": {
+          "en-US": {
+            "eTag": "9fcee090a26aeb8a0f9e263517c6c42b"
+          }
+        },
+        "lambda": [
+          {
+            "alexaUsage": [
+              "custom/default"
+            ],
+            "arn": "arn:aws:lambda:us-east-1:324447029891:function:fish_world_dev",
+            "awsRegion": "us-east-1",
+            "codeUri": "lambda/custom",
+            "functionName": "fish_world_dev",
+            "handler": "index.handler",
+            "revisionId": "cb52176e-2190-4ab7-a5bf-730a74c77491",
+            "runtime": "nodejs8.10"
+          }
+        ]
+      }
+    }
+  }
+}
