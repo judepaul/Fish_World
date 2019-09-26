@@ -1,0 +1,47 @@
+{
+    "bodyTemplate7Data": {
+        "type": "object",
+        "objectId": "bt7Sample",
+        "title": "Welcome to Image Filter",
+        "backgroundImage": {
+            "contentDescription": null,
+            "smallSourceUrl": null,
+            "largeSourceUrl": null,
+            "sources": [
+                {
+                    "url": "https://apl-image.s3.amazonaws.com/06062019/camera-background-12.jpg",
+                    "size": "small",
+                    "widthPixels": 0,
+                    "heightPixels": 0
+                },
+                {
+                    "url": "https://apl-image.s3.amazonaws.com/06062019/camera-background-12.jpg",
+                    "size": "large",
+                    "widthPixels": 0,
+                    "heightPixels": 0
+                }
+            ]
+        },
+        "image": {
+            "contentDescription": null,
+            "smallSourceUrl": null,
+            "largeSourceUrl": null,
+            "sources": [
+                {
+                    "url": "https://s3.amazonaws.com/fish-world/Gaurav_photo.jpg",
+                    "size": "small",
+                    "widthPixels": 0,
+                    "heightPixels": 0
+                },
+                {
+                    "url": "https://s3.amazonaws.com/fish-world/Gaurav_photo.jpg",
+                    "size": "large",
+                    "widthPixels": 0,
+                    "heightPixels": 0
+                }
+            ]
+        },
+        "logoUrl": "https://s3.amazonaws.com/fish-world/filter1.png",
+        "hintText": "Try, \"Alexa, select number 1\""
+    }
+}

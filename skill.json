@@ -23,7 +23,12 @@
         "endpoint": {
           "sourceDir": "lambda/custom",
           "uri": "fish_world_dev"
-        }
+        },
+        "interfaces": [
+					{
+							"type":"ALEXA_PRESENTATION_APL"
+					}
+        ]
       }
     },
     "manifestVersion": "1.0"

@@ -23,7 +23,7 @@
             "codeUri": "lambda/custom",
             "functionName": "fish_world_dev",
             "handler": "index.handler",
-            "revisionId": "cb52176e-2190-4ab7-a5bf-730a74c77491",
+            "revisionId": "594dce88-d2c1-4029-ac04-06a522eb2c66",
             "runtime": "nodejs8.10"
           }
         ]

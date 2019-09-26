@@ -2,6 +2,7 @@
 /* eslint-disable  no-console */
 
 const Alexa = require('ask-sdk-core');
+const launch_data = require('./data/launch_data.json');
 
 const SKILL_NAME = "fish world";
 
@@ -122,9 +123,11 @@ const LaunchRequestHandler = {
         let feedScheduleInterval = typeof (attributes.feedInterval) == "undefined" || !attributes.feedInterval ? 0 : attributes.feedInterval;
         console.log("skillAccessCount ==> " + skillAccessCount);
         console.log("feedScheduleInterval ==> " + feedScheduleInterval);
-
+        let feedInterval = '';
+        let feedIntervalDisplayMsg = '';
         let fedCount = typeof (sessionAttributes.fedCount) == "undefined" || !sessionAttributes.fedCount ? 0 : sessionAttributes.fedCount
-
+        let displayFeedScheduleInterval = "";
+        let nextFeedDateTime = '';
         let say = '';
         let shouldEndSession = true;
         if (typeof (skillAccessCount) == 'undefined' || parseInt(skillAccessCount) == 0) {
@@ -155,7 +158,7 @@ const LaunchRequestHandler = {
                 let dateTime = formatDate(last_fed_date.toString()) + ' ' + getTimePeriod(last_fed_date.toString());
                 let hrs = formatAMPM(last_fed_date.toString());
                 //let feedInterval = timeSince(last_fed_date);
-                let feedInterval = getNiceTime(last_fed_date, new Date(), 1, 'ago');
+                feedInterval = getNiceTime(last_fed_date, new Date(), 1, 'ago');
                 console.log("feedInterval ==> " + feedInterval);
                 let timeInterval = getTimeInterval(feedInterval);
                 // say += 'Welcome back. You have fed the fish on ' + dateTime +' Would you like to feed the fishes now? You can say Yes or No.';
@@ -188,25 +191,39 @@ const LaunchRequestHandler = {
                     console.log("feedScheduleInterval ==> "+feedScheduleInterval);
                     console.log("parseInt(feedInterval) ==> "+parseInt(feedInterval));
                     if (feedScheduleInterval == parseInt(feedInterval)) {
+                        feedIntervalDisplayMsg = feedInterval +' [ It is time to feed your fishes ]';
                         if (feedScheduleInterval == 1) {
-                            say += '<break time="500ms"/>' + INTERVAL_IN_1DAY_2DAYS + ' <break time="300ms"/>' + 'you have chosen <break time="100ms"/> to feed the fishes <break time="100ms"/> once every day' + ' <break time="300ms"/>' + ' Would you like to feed the fishes now </prosody>';
+                            say += '<break time="500ms"/>' + INTERVAL_IN_1DAY_2DAYS + ' <break time="300ms"/>' + 'you have chosen <break time="100ms"/> to feed the fishes <break time="100ms"/> once every day' + ' <break time="300ms"/>' + '. Would you like to feed the fishes now </prosody>';
                         } else {
-                            say += '<break time="500ms"/> Fishes were fed <break time="100ms"/> ' + feedInterval + ' ago <break time="300ms"/>' + 'you have chosen <break time="100ms"/> to feed the fishes on every <break time="100ms"/> ' + feedScheduleInterval + 'days' + ' <break time="300ms"/>' + ' Would you like to feed the fishes now </prosody>';
+                            say += '<break time="500ms"/> Fishes were fed <break time="100ms"/> ' + feedInterval + ' <break time="300ms"/>' + 'you have chosen <break time="100ms"/> to feed the fishes on every <break time="100ms"/> ' + feedScheduleInterval + 'days' + ' <break time="300ms"/>' + '. Would you like to feed the fishes now </prosody>';
                         }
                     } else if (feedScheduleInterval > parseInt(feedInterval)) {
+                        feedIntervalDisplayMsg = feedInterval + ' [ It is not yet time to feed ]';
+
                         if (feedScheduleInterval == 1) {
-                            say += '<break time="500ms"/> Fishes were fed <break time="100ms"/> more than ' + parseInt(timeInterval[0]) + ' days ago <break time="300ms"/>' + 'you have chosen <break time="100ms"/> to feed the fishes <break time="100ms"/> once every day' + ' <break time="300ms"/>' + EARLIER_SCHEDULED_FEEDING_MESSAGE + ' <break time="300ms"/>' + ' Would you like to feed the fishes now </prosody> ';
+                            say += '<break time="500ms"/> Fishes were fed <break time="100ms"/> more than ' + parseInt(timeInterval[0]) + ' days ago <break time="300ms"/>' + 'you have chosen <break time="100ms"/> to feed the fishes <break time="100ms"/> once every day' + ' <break time="300ms"/>' + EARLIER_SCHEDULED_FEEDING_MESSAGE + ' <break time="300ms"/>' + '. Would you like to feed the fishes now </prosody> ';
                         }else{
-                            say += '<break time="500ms"/> Fishes were fed <break time="100ms"/> more than ' + parseInt(timeInterval[0]) + ' days ago <break time="300ms"/>' + 'you have chosen <break time="100ms"/> to feed the fishes on every <break time="100ms"/> ' + feedScheduleInterval + 'days' + EARLIER_SCHEDULED_FEEDING_MESSAGE + ' <break time="300ms"/>' + ' Would you like to feed the fishes now </prosody> ';
+                            say += '<break time="500ms"/> Fishes were fed <break time="100ms"/> more than ' + parseInt(timeInterval[0]) + ' days ago <break time="300ms"/>' + 'you have chosen <break time="100ms"/> to feed the fishes on every <break time="100ms"/> ' + feedScheduleInterval + 'days' + EARLIER_SCHEDULED_FEEDING_MESSAGE + ' <break time="300ms"/>' + '. Would you like to feed the fishes now </prosody> ';
                         }
                     } else if (feedScheduleInterval < parseInt(feedInterval)) {
+                        feedIntervalDisplayMsg = feedInterval +' [ It is time to feed your fishes ]';
                         if (feedScheduleInterval == 1) {
-                            say += '<break time="500ms"/> Fishes were fed <break time="100ms"/> more than ' + parseInt(timeInterval[0]) + ' days ago <break time="300ms"/>' + 'you have chosen <break time="100ms"/> to feed the fishes <break time="100ms"/> once every day' + ' <break time="300ms"/>' + LATER_SCHEDULED_FEEDING_MESSAGE + ' <break time="300ms"/>' + ' Would you like to feed the fishes now </prosody> ';
+                            say += '<break time="500ms"/> Fishes were fed <break time="100ms"/> more than ' + parseInt(timeInterval[0]) + ' days ago <break time="300ms"/>' + 'you have chosen <break time="100ms"/> to feed the fishes <break time="100ms"/> once every day' + ' <break time="300ms"/>' + LATER_SCHEDULED_FEEDING_MESSAGE + ' <break time="300ms"/>' + '. Would you like to feed the fishes now </prosody> ';
                         }else{
-                            say += '<break time="500ms"/> Fishes were fed <break time="100ms"/> more than ' + parseInt(timeInterval[0]) + ' days ago <break time="300ms"/>' + 'you have chosen <break time="100ms"/> to feed the fishes on every <break time="100ms"/> ' + feedScheduleInterval + 'days' + LATER_SCHEDULED_FEEDING_MESSAGE + ' <break time="300ms"/>' + ' Would you like to feed the fishes now </prosody> ';
+                            say += '<break time="500ms"/> Fishes were fed <break time="100ms"/> more than ' + parseInt(timeInterval[0]) + ' days ago <break time="300ms"/>' + 'you have chosen <break time="100ms"/> to feed the fishes on every <break time="100ms"/> ' + feedScheduleInterval + 'days' + LATER_SCHEDULED_FEEDING_MESSAGE + ' <break time="300ms"/>' + '. Would you like to feed the fishes now </prosody> ';
                         }
                     } else {
                         say += ' <break time="500ms"/> </prosody>';
+                    }
+                    shouldEndSession = false;
+                } else if (timeInterval.length > 0 && (timeInterval[1] == 'month' || timeInterval[1] == 'month')) {
+                    console.log("feedScheduleInterval ==> "+feedScheduleInterval);
+                    console.log("parseInt(feedInterval) ==> "+parseInt(feedInterval));
+                    feedIntervalDisplayMsg = feedInterval +' [ It is time to feed your fishes ]';
+                    if (feedScheduleInterval == 1) {
+                        say += '<break time="500ms"/>' + INTERVAL_IN_1DAY_2DAYS + ' <break time="300ms"/>' + 'you have chosen <break time="100ms"/> to feed the fishes <break time="100ms"/> once every day' + ' <break time="300ms"/>' + '. Would you like to feed the fishes now </prosody>';
+                    } else {
+                        say += '<break time="500ms"/> Fishes were fed <break time="100ms"/> ' + feedInterval + ' <break time="300ms"/>' + 'you have chosen <break time="100ms"/> to feed the fishes on every <break time="100ms"/> ' + feedScheduleInterval + 'days' + ' <break time="300ms"/>' + '. Would you like to feed the fishes now </prosody>';
                     }
                     shouldEndSession = false;
                 } else {
@@ -227,8 +244,27 @@ const LaunchRequestHandler = {
         // const persistentAttributes = {skillAccessCount: skillAccessCount};
         // handlerInput.attributesManager.setPersistentAttributes(persistentAttributes);
         // await attributesManager.savePersistentAttributes();
-
-        return responseBuilder
+        feedScheduleInterval = 2;
+        displayFeedScheduleInterval = (feedScheduleInterval == 1) ? "once every day" : "every "+ feedScheduleInterval + " days"
+        console.log("displayFeedScheduleInterval ==> " + displayFeedScheduleInterval);
+        console.log("feedIntervalDisplayMsg ==> " +feedIntervalDisplayMsg);
+        if (supportsAPL(handlerInput)) {
+            return responseBuilder
+            .speak(say)
+            .withShouldEndSession(shouldEndSession)
+            .addDirective({
+                type: 'Alexa.Presentation.APL.RenderDocument',
+                document: require('./launch.json'),
+                datasources: {
+                    "fishData": {
+                        "timeInterval": displayFeedScheduleInterval, "lastFedInfo": feedIntervalDisplayMsg, "displayText": say, "hintText": "Try, \"Alexa, Launch/Open Fish World\""
+                    }
+                }
+            })
+            .withShouldEndSession(false)
+            .getResponse();
+        }else{
+            return responseBuilder
             .speak(say)
             //.reprompt('<prosody volume="loud" rate="medium" pitch="medium"> Say yes to save your feed or no to quit. </prosody>')
             .withStandardCard('Fish World',
@@ -236,6 +272,7 @@ const LaunchRequestHandler = {
                 welcomeCardImg.smallImageUrl, welcomeCardImg.largeImageUrl)
             .withShouldEndSession(shouldEndSession)
             .getResponse();
+        }
     },
 };
 
@@ -372,7 +409,7 @@ const getLastFeedInfoHandler = {
                         if (feedScheduleInterval == 1) {
                             say += '<break time="500ms"/>' + INTERVAL_IN_1DAY_2DAYS + ' <break time="300ms"/>' + 'you have chosen <break time="100ms"/> to feed the fishes <break time="100ms"/> once every day' + ' <break time="300ms"/>' + ' Would you like to feed the fishes now </prosody>';
                         } else {
-                            say += '<break time="500ms"/> Fishes were fed <break time="100ms"/> ' + feedInterval + ' ago <break time="300ms"/>' + 'you have chosen <break time="100ms"/> to feed the fishes on every <break time="100ms"/> ' + feedScheduleInterval + 'days' + ' <break time="300ms"/>' + ' Would you like to feed the fishes now </prosody>';
+                            say += '<break time="500ms"/> Fishes were fed <break time="100ms"/> ' + feedInterval + ' <break time="300ms"/>' + 'you have chosen <break time="100ms"/> to feed the fishes on every <break time="100ms"/> ' + feedScheduleInterval + 'days' + ' <break time="300ms"/>' + ' Would you like to feed the fishes now </prosody>';
                         }
                     } else if (feedScheduleInterval > parseInt(feedInterval)) {
                         if (feedScheduleInterval == 1) {
@@ -675,7 +712,7 @@ const HelpIntentHandler = {
             && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
     },
     handle(handlerInput) {
-        const speechText = 'You can say hello to me!';
+        const speechText = 'You can say open/launch fish world, I will tell you the last date and time you have fed them along with feed frequency!';
 
         return handlerInput.responseBuilder
             .speak(speechText)
@@ -778,6 +815,15 @@ const ErrorHandler = {
 
 
 // 3.  Helper Functions ===================================================================
+
+
+// Check the device capability for APL
+function supportsAPL(handlerInput) {
+	const supportedInterfaces =
+		handlerInput.requestEnvelope.context.System.device.supportedInterfaces;
+	const aplInterface = supportedInterfaces['Alexa.Presentation.APL'];
+	return aplInterface != null && aplInterface != undefined;
+}
 
 function capitalize(myString) {
 
